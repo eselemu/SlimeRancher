@@ -1,0 +1,33 @@
+Shader "AGC/CutOffShader" 
+{
+    Properties
+    {
+        _rimColor("Rim Color", Color) = (1,1,1,1)
+        _rimPower("Rim Power", Range(0, 1)) = 0
+        _stripeWidth("Stripe Width", Range(1, 50)) = 10
+    }
+
+    SubShader {
+        CGPROGRAM
+            #pragma surface surf Lambert
+
+            struct Input {
+                float3 viewDir;
+                float3 worldPos;
+            };
+
+            float4 _rimColor;
+            float _rimPower;
+            float _stripeWidth;
+
+            void surf(Input IN, inout SurfaceOutput o) {
+                half rim = saturate(dot(normalize(IN.viewDir), o.Normal)); // -1 to 1
+                // Ternary operator
+                // condition ? value_if_true : value_if_false
+                // o.Emission = rim > 0.7 ? _rimColor * _rimPower : rim > 0.5 ? float3(1,0,0) : float3(0,0,0);
+                // o.Emission = frac(IN.worldPos.y * 10.0 / 2.0) > 0.5 ? _rimColor * _rimPower : float3(0,0,0);
+                o.Emission = frac(IN.worldPos.y * _stripeWidth) > 0.5 ? _rimColor * _rimPower : float3(0,0,0);
+            }
+        ENDCG
+    }
+}
