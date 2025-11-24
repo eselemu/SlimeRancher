@@ -14,7 +14,7 @@ public class LaserGun: MonoBehaviour
     public LayerMask pickupMask;      
     private Rigidbody heldObject;     
 
-    private bool laserActive = false; 
+    public bool laserActive = false; 
 
     void Awake()
     {
