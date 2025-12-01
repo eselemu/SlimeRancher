@@ -57,24 +57,59 @@ public class LaserGun: MonoBehaviour
     }
 
     void TryPickupObject()
+{
+    if (heldObject != null)
+        return;
+
+    Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+    RaycastHit hit;
+
+    if (Physics.Raycast(ray, out hit, gunRange, pickupMask))
     {
-        if (heldObject != null)
-            return;
+        GameObject obj = hit.collider.gameObject;
 
-        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, gunRange, pickupMask))
+        if (obj.CompareTag("ExtrudeShader"))
         {
-            Rigidbody rb = hit.collider.GetComponent<Rigidbody>();
-            if (rb != null)
+            Renderer r = obj.GetComponentInChildren<Renderer>();
+            if (r != null)
             {
-                heldObject = rb;
-                heldObject.useGravity = false;
-                heldObject.drag = 10f;
+                r.material.shader = Shader.Find("ACG/ExtrudeShader");
+
+                r.material.SetFloat("_ExtrudeAmplitude", 0f);
+                r.material.SetFloat("_ExtrudeSpeed", 1); 
+
+                StartCoroutine(ExtrudeAndDestroy(r, obj));
             }
+
+            return;
+        }
+
+        Rigidbody rb = obj.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            heldObject = rb;
+            heldObject.useGravity = false;
+            heldObject.drag = 10f;
         }
     }
+}
+IEnumerator ExtrudeAndDestroy(Renderer r, GameObject root)
+{
+    float amplitude = 0f;
+    float speed = 150f;
+    float maxAmplitude = 200f;
+
+    while (amplitude < maxAmplitude)
+    {
+        amplitude += Time.deltaTime * speed;
+        r.material.SetFloat("_ExtrudeAmplitude", Mathf.Abs(amplitude));
+        yield return null;
+    }
+
+    yield return new WaitForSeconds(0f);
+    Destroy(root);
+}
+
 
     void MoveObject()
     {

@@ -33,4 +33,20 @@ public class SceneChanger : MonoBehaviour
             TeamPanel.SetActive(true);
         }
     }
+
+    public void Backl(GameObject panel)
+    {   
+        if (panel.name == "ObjectivePanel")
+        {
+            MainMenuPanel.SetActive(true);
+            ObjectivePanel.SetActive(false);
+        }
+        else if (panel.name == "TeamPanel")
+        {
+            MainMenuPanel.SetActive(true);
+            TeamPanel.SetActive(false);
+        }
+    }
+
+
 }

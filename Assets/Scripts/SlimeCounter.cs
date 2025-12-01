@@ -1,26 +1,32 @@
 using UnityEngine;
+using System.Collections;
 
 public class SlimeCollector : MonoBehaviour
 {
     public int requiredSlimes = 3;     
     private int collectedSlimes = 0;
     public Animator animator;
+    public GameObject finalObject;  
+    private Animator finalAnimator;
 
+    
     void Start()
     {
         animator = GetComponent<Animator>();
+        finalAnimator = finalObject.GetComponent<Animator>();
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PickUp"))
         {
-            CollectSlime(other.gameObject);   
+            StartCoroutine(CollectSlime(other.gameObject));  
         }
     }
 
-    void CollectSlime(GameObject slime)
+    IEnumerator CollectSlime(GameObject slime)
     {
+        yield return new WaitForSeconds(2f); 
+        
         collectedSlimes++;
 
         Animator slimeAnim = slime.GetComponent<Animator>();
@@ -33,7 +39,8 @@ public class SlimeCollector : MonoBehaviour
 
         if (collectedSlimes >= requiredSlimes)
         {
-            Debug.Log("todos los slimes recolectados");
+            Debug.Log("Todos los slimes recolectados");
+            finalAnimator.SetTrigger("openingGate");
         }
     }
 }

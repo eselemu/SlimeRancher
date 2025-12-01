@@ -21,7 +21,7 @@ Shader "AGC/ShaderProperties"
                 half rim = saturate(dot(normalize(IN.viewDir), o.Normal)); // -1 to 1
                 //Ternary operator
                 // condition ? value_if_true : value_if_false
-                o.Emission = rim > 0.7 ? _rimColor * _rimPower : rim > 0.5 ? float3(1,0,0) : float3(0,0,0);
+                o.Emission = rim > 0.9 ? _rimColor * _rimPower : rim > 0.6 ? float3(1,0.5,0) : float3(1,0,0);
             }
         ENDCG
     }

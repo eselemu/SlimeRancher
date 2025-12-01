@@ -2,7 +2,7 @@
     Properties {
         _MainTex ("Texture", 2D) = "white" {}
         _ExtrudeSpeed ("Extrude Speed", Range(0,10)) = 1.0
-        _ExtrudeAmplitude ("Extrude Amplitude", Range(0,1)) = 1.0
+        _ExtrudeAmplitude ("Extrude Amplitude", Range(0,100)) = 1.0
     }
 
     SubShader {

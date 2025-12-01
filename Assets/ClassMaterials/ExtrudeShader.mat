@@ -65,8 +65,9 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _ExtrudeAmplitude: 1
-    - _ExtrudeSpeed: 10
+    - _ExtrudeAmplitude: 0.02
+    - _ExtrudeDirection: 1
+    - _ExtrudeSpeed: 1.33
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1

@@ -26,7 +26,7 @@ Shader "AGC/CutOffShader"
                 // condition ? value_if_true : value_if_false
                 // o.Emission = rim > 0.7 ? _rimColor * _rimPower : rim > 0.5 ? float3(1,0,0) : float3(0,0,0);
                 // o.Emission = frac(IN.worldPos.y * 10.0 / 2.0) > 0.5 ? _rimColor * _rimPower : float3(0,0,0);
-                o.Emission = frac(IN.worldPos.y * _stripeWidth) > 0.5 ? _rimColor * _rimPower : float3(0,0,0);
+                o.Emission = frac(IN.worldPos.y * _stripeWidth) > 0.5 ? _rimColor * _rimPower : float3(1,0.5,0);
             }
         ENDCG
     }
